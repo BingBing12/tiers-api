@@ -101,6 +101,30 @@ app
     }
   });
 
+app.route("/influencers/:influencerID").get((req, res) => {
+  Influencer.findOne({ _id: req.params.influencerID }, (err, result) => {
+    if (!err && req.headers.api_key === API_KEY) {
+      res.send(result);
+    } else if (req.headers.api_key !== API_KEY) {
+      res.send("unauthorized");
+    } else {
+      res.send(err);
+    }
+  });
+});
+
+app.route("/users/:userID").get((req, res) => {
+  User.findOne({ _id: req.params.userID }, (err, result) => {
+    if (!err && req.headers.api_key === API_KEY) {
+      res.send(result);
+    } else if (req.headers.api_key !== API_KEY) {
+      res.send("unauthorized");
+    } else {
+      res.send(err);
+    }
+  });
+});
+
 app.listen(3000, function () {
   console.log("connected to port 3000");
 });
